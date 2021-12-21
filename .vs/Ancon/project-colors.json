@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "3e468c43-3fc5-467c-b776-e1db04750ebd": {
+      "ProjectGuid": "3e468c43-3fc5-467c-b776-e1db04750ebd",
+      "DisplayName": "Ancon.API",
+      "ColorIndex": 0
+    },
+    "00b8a551-16dd-4ff3-8d08-2dacc318e238": {
+      "ProjectGuid": "00b8a551-16dd-4ff3-8d08-2dacc318e238",
+      "DisplayName": "Ancon.Domain",
+      "ColorIndex": 1
+    },
+    "9f099edf-39ab-437d-ad88-fc1d5bb8efdb": {
+      "ProjectGuid": "9f099edf-39ab-437d-ad88-fc1d5bb8efdb",
+      "DisplayName": "Ancon.Application",
+      "ColorIndex": 2
+    },
+    "991930eb-afed-49a7-807b-126c36dd24eb": {
+      "ProjectGuid": "991930eb-afed-49a7-807b-126c36dd24eb",
+      "DisplayName": "Ancon.Persistance",
+      "ColorIndex": 3
+    },
+    "4a008f1b-a926-46b7-a880-c528af261d51": {
+      "ProjectGuid": "4a008f1b-a926-46b7-a880-c528af261d51",
+      "DisplayName": "Ancon.Querying",
+      "ColorIndex": 4
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 5
+}

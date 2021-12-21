@@ -1,0 +1,17 @@
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\Ancon.Querying.deps.json
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\Ancon.Querying.dll
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\ref\Ancon.Querying.dll
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\Ancon.Querying.pdb
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\Ancon.Domain.dll
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\Ancon.Persistance.dll
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\Ancon.Domain.pdb
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\bin\Debug\net5.0\Ancon.Persistance.pdb
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.csproj.AssemblyReference.cache
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.AssemblyInfoInputs.cache
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.AssemblyInfo.cs
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.csproj.CoreCompileInputs.cache
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.csproj.CopyComplete
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.dll
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\ref\Ancon.Querying.dll
+D:\.NET Web API\Ancon\Ancon\Ancon.Querying\obj\Debug\net5.0\Ancon.Querying.pdb
