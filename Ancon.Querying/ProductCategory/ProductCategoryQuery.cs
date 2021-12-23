@@ -36,7 +36,7 @@ namespace Ancon.Querying.ProductCategory
             }
         }
 
-        public async Task<IEnumerable<ProductCategoryQueryModel>> GetProductCategoryById(int id)
+        public async Task<ProductCategoryQueryModel> GetProductCategoryById(int id)
         {
             //var productCategory = await context.ProductCategories.Include(productCategory => productCategory.Products).FirstOrDefaultAsync(pc => pc.Id.Equals(id));
             //return mapper.Map<Handlers.ProductCategory.GetProductCategoryById.ProductCategoryModel>(productCategory);
@@ -45,7 +45,7 @@ namespace Ancon.Querying.ProductCategory
             using (var connection = new NpgsqlConnection(configuration.GetConnectionString("ResturantStoreDBPostgres")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<ProductCategoryQueryModel>(sql);
+                var result = await connection.QueryFirstAsync<ProductCategoryQueryModel>(sql);
 
                 return result;
             }

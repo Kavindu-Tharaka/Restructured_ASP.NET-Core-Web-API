@@ -1,6 +1,4 @@
 ﻿using Ancon.Domain.Interfaces.Resturant;
-using Ancon.Domain.Models;
-using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using System.Threading.Tasks;
 
@@ -8,21 +6,17 @@ namespace Ancon.Persistance.Repositories.Resturant
 {
     public class ResturantRepository : IResturantRepository
     {
-        private readonly ResturantStoreContext context;
-        private readonly IMapper mapper;
+        private readonly ResturantStoreContext _context;
 
-        public ResturantRepository(ResturantStoreContext context, IMapper mapper)
+        public ResturantRepository(ResturantStoreContext context)
         {
-            this.context = context;
-            this.mapper = mapper;
+            _context = context;
         }
 
-        public async Task<int> AddResturant(ResturantAddModel resturantModel)
+        public async Task<int> AddResturant(Domain.Entities.Resturant resturant)
         {
-            var resturant = mapper.Map<Domain.Entities.Resturant>(resturantModel);   //mehema harida?  //swagger walin test karaddi add nam una
-
-            context.Resturants.Add(resturant);
-            await context.SaveChangesAsync();
+            _context.Resturants.Add(resturant);
+            await _context.SaveChangesAsync();
 
             return resturant.Id;
         }
@@ -30,18 +24,18 @@ namespace Ancon.Persistance.Repositories.Resturant
         public async Task DeleteResturant(int resturantId)
         {
             var resturant = new Domain.Entities.Resturant() { Id = resturantId };
-            context.Resturants.Remove(resturant);
-            await context.SaveChangesAsync();
+            _context.Resturants.Remove(resturant);
+            await _context.SaveChangesAsync();
         }
 
 
         public async Task UpdateResturant(int resturantId, JsonPatchDocument document)
         {
-            var resturant = await context.Resturants.FindAsync(resturantId);
+            var resturant = await _context.Resturants.FindAsync(resturantId);
             if (resturant != null)
             {
                 document.ApplyTo(resturant);
-                await context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
     }

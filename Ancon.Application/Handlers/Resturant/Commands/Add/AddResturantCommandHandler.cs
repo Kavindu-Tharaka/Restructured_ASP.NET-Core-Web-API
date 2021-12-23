@@ -1,11 +1,5 @@
-﻿using Ancon.Domain.Interfaces.Product;
-using Ancon.Domain.Interfaces.Resturant;
-using Ancon.Domain.Models;
+﻿using Ancon.Domain.Interfaces.Resturant;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +16,7 @@ namespace Ancon.Application.Handlers.Resturant.Commands.Add
 
         public async Task<int> Handle(AddResturantCommand request, CancellationToken cancellationToken)
         {
-            var resturant = new ResturantAddModel()
+            var resturant = new Domain.Entities.Resturant()
             {
                 Name = request.Name,
                 Address = request.Address,

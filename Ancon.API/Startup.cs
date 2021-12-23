@@ -1,4 +1,4 @@
-using Ancon.Application.Handlers.Resturant.Commands.Add;
+using Ancon.API.Models.Resturant.Command.Add;
 using Ancon.Application.Handlers.Resturant.Queries.Get;
 using Ancon.Domain.Interfaces.Product;
 using Ancon.Domain.Interfaces.ProductCategory;
@@ -44,7 +44,7 @@ namespace Ancon.API
             // meka witharak dala thiyeddi anith ewa wada karanne kohomada?
 
             services.AddMediatR(typeof(GetResturantQueryHandler).GetTypeInfo().Assembly);
-            //services.AddMediatR(typeof(AddResturantCommandHandler).GetTypeInfo().Assembly);
+            //services.AddMediatR(typeof(AddResturantCommand).GetTypeInfo().Assembly);
 
 
 

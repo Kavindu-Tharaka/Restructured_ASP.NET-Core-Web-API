@@ -21,7 +21,7 @@ namespace Ancon.Application.Handlers.Product.Commands.Add
 
         public async Task<int> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
-            var product = new ProductAddModel()
+            var product = new Domain.Entities.Product()
             {
                 Name = request.Name,
                 Price = request.Price,

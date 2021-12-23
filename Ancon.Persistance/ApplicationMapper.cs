@@ -15,13 +15,10 @@ namespace Ancon.Persistance
         {
 
             CreateMap<Product, ProductQueryModel>().ReverseMap();
-            CreateMap<Product, ProductAddModel>().ReverseMap();
 
             CreateMap<ProductCategory, ProductCategoryQueryModel>().ReverseMap();
-            CreateMap<ProductCategory, ProductCategoryAddModel>().ReverseMap();
 
             CreateMap<Resturant, ResturantQueryModel>().ReverseMap();
-            CreateMap<Resturant, ResturantAddModel>().ReverseMap();
 
 
         }

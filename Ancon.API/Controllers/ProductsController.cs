@@ -1,4 +1,9 @@
-﻿using Ancon.Domain.Interfaces.Product;
+﻿using Ancon.API.Models.Product.Command.Delete;
+using Ancon.API.Models.Product.Command.Update;
+using Ancon.API.Models.Product.Queries.Get;
+using Ancon.API.Models.Product.Queries.GetById;
+using Ancon.Domain.Interfaces.Product;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -10,24 +15,31 @@ namespace Ancon.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public ProductsController(IMediator mediator)
+        public ProductsController(IMediator mediator, IMapper mapper)
         {
-            this.mediator = mediator;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
         {
-            var products = await mediator.Send(new Application.Handlers.Product.Queries.Get.GetProductQuery());
+            var applicationQuery = _mapper.Map<Application.Handlers.Product.Queries.Get.GetProductQuery>(new GetProductQuery());
+
+            var products = await _mediator.Send(applicationQuery);
             return Ok(products);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById([FromRoute] int id)
         {
-            var product = await mediator.Send(new Application.Handlers.Product.Queries.GetById.GetByIdProductQuery() { Id = id });
+            var applicationQuery = _mapper.Map<Application.Handlers.Product.Queries.GetById.GetByIdProductQuery>
+                                   (new GetByIdProductQuery() { Id = id });
+
+            var product = await _mediator.Send(applicationQuery);
 
             if (product == null)
             {
@@ -40,7 +52,9 @@ namespace Ancon.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProduct([FromBody] Application.Handlers.Product.Commands.Add.AddProductCommand command)
         {
-            var id = await mediator.Send(command);
+            var applicationCommand = _mapper.Map<Application.Handlers.Product.Commands.Add.AddProductCommand>(command);
+
+            var id = await _mediator.Send(applicationCommand);
 
             return CreatedAtAction(nameof(GetProductById), new { id = id, controller = "products" }, id);
         }
@@ -48,7 +62,10 @@ namespace Ancon.API.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateProduct([FromBody] JsonPatchDocument document, [FromRoute] int id)
         {
-            await mediator.Send(new Application.Handlers.Product.Commands.Update.UpdateProductCommand() { Id = id, document = document });
+            var applicationCommand = _mapper.Map<Application.Handlers.Product.Commands.Update.UpdateProductCommand>
+                                     (new UpdateProductCommand() { Id = id, document = document });
+
+            await _mediator.Send(applicationCommand);
 
             return Ok();
         }
@@ -56,7 +73,10 @@ namespace Ancon.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            await mediator.Send(new Application.Handlers.Product.Commands.Delete.DeleteProductCommand() { Id = id });
+            var applicationCommand = _mapper.Map<Application.Handlers.Product.Commands.Delete.DeleteProductCommand>
+                                     (new DeleteProductCommand() { Id = id });
+
+            await _mediator.Send(applicationCommand);
 
             return Ok();
         }

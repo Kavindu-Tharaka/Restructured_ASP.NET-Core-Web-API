@@ -10,7 +10,7 @@ namespace Ancon.Domain.Interfaces.Product
 {
     public interface IProductRepository
     {
-        Task<int> AddProduct(ProductAddModel productModel);
+        Task<int> AddProduct(Entities.Product product);
         Task UpdateProduct(int productId, JsonPatchDocument document);
         Task DeleteProduct(int productId);
     }

@@ -8,21 +8,17 @@ namespace Ancon.Persistance.Repositories.ProductCategory
 {
     public class ProductCategoryRepository : IProductCategoryRepository
     {
-        private readonly ResturantStoreContext context;
-        private readonly IMapper mapper;
+        private readonly ResturantStoreContext _context;
 
-        public ProductCategoryRepository(ResturantStoreContext context, IMapper mapper)
+        public ProductCategoryRepository(ResturantStoreContext context)
         {
-            this.context = context;
-            this.mapper = mapper;
+            _context = context;
         }
 
-        public async Task<int> AddProductCategory(ProductCategoryAddModel productCategoryModel)
+        public async Task<int> AddProductCategory(Domain.Entities.ProductCategory productCategory)
         {
-            var productCategory = mapper.Map<Domain.Entities.ProductCategory>(productCategoryModel);   //mehema harida?  //swagger walin test karaddi add nam una
-
-            context.ProductCategories.Add(productCategory);
-            await context.SaveChangesAsync();
+            _context.ProductCategories.Add(productCategory);
+            await _context.SaveChangesAsync();
 
             return productCategory.Id;
         }
@@ -30,17 +26,17 @@ namespace Ancon.Persistance.Repositories.ProductCategory
         public async Task DeleteProductCategory(int productCategoryId)
         {
             var productCategory = new Domain.Entities.ProductCategory() { Id = productCategoryId };
-            context.ProductCategories.Remove(productCategory);
-            await context.SaveChangesAsync();
+            _context.ProductCategories.Remove(productCategory);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateProductCategory(int productCategoryId, JsonPatchDocument document)
         {
-            var productCategory = await context.ProductCategories.FindAsync(productCategoryId);
+            var productCategory = await _context.ProductCategories.FindAsync(productCategoryId);
             if (productCategory != null)
             {
                 document.ApplyTo(productCategory);
-                await context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
     }

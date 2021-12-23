@@ -17,7 +17,7 @@ namespace Ancon.Application.Handlers.ProductCategory.Commands.Add
 
         public async Task<int> Handle(AddProductCategoryCommand request, CancellationToken cancellationToken)
         {
-            var productCategory = new ProductCategoryAddModel()
+            var productCategory = new Domain.Entities.ProductCategory()
             {
                 CategoryName = request.CategoryName,
             };

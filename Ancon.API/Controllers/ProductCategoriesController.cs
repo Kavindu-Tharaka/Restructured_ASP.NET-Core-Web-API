@@ -1,5 +1,10 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Http;
+﻿using Ancon.API.Models.ProductCategory.Command.Add;
+using Ancon.API.Models.ProductCategory.Command.Delete;
+using Ancon.API.Models.ProductCategory.Command.Update;
+using Ancon.API.Models.ProductCategory.Queries.Get;
+using Ancon.API.Models.ProductCategory.Queries.GetById;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,28 +15,32 @@ namespace Ancon.API.Controllers
     [ApiController]
     public class ProductCategoriesController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public ProductCategoriesController(IMediator mediator)
+        public ProductCategoriesController(IMediator mediator, IMapper mapper)
         {
-            this.mediator = mediator;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllProductCategories()
         {
-            //var productCategories = await productCategoriesRepository.GetAllProductCategories();
+            var applicationQuery = _mapper.Map<Application.Handlers.ProductCategory.Queries.Get.GetProductCategoryQuery>
+                                   (new GetProductCategoryQuery());
 
-            var productCategories = await mediator.Send(new Application.Handlers.ProductCategory.Queries.Get.GetProductCategoryQuery());
+            var productCategories = await _mediator.Send(applicationQuery);
             return Ok(productCategories);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductCategoryById([FromRoute] int id)
         {
-            //var productCategory = await productCategoriesRepository.GetProductCategoryById(id);
+            var applicationQuery = _mapper.Map<Application.Handlers.ProductCategory.Queries.GetById.GetByIdProductCategoryQuery>
+                                   (new GetByIdProductCategoryQuery() { Id = id });
 
-            var productCategory = await mediator.Send(new Application.Handlers.ProductCategory.Queries.GetById.GetByIdProductCategoryQuery() { Id = id });
+            var productCategory = await _mediator.Send(applicationQuery);
 
             if (productCategory == null)
             {
@@ -42,11 +51,11 @@ namespace Ancon.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProductCategory([FromBody] Application.Handlers.ProductCategory.Commands.Add.AddProductCategoryCommand command)
+        public async Task<IActionResult> AddProductCategory([FromBody] AddProductCategoryCommand command)
         {
-            //var id = await productCategoriesRepository.AddProductCategory(productCategorymodel);
+            var applicationCommand = _mapper.Map<Application.Handlers.ProductCategory.Commands.Add.AddProductCategoryCommand>(command);
 
-            var id = await mediator.Send(command);
+            var id = await _mediator.Send(applicationCommand);
 
             return CreatedAtAction(nameof(GetProductCategoryById), new { id = id, controller = "ProductCategories" }, id);
         }
@@ -54,18 +63,20 @@ namespace Ancon.API.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateProductCategory([FromBody] JsonPatchDocument document, [FromRoute] int id)
         {
-            //await productCategoriesRepository.UpdateProductCategory(id, document);
+            var applicationCommand = _mapper.Map<Application.Handlers.ProductCategory.Commands.Update.UpdateProductCategoryCommand>
+                                     (new UpdateProductCategoryCommand() { Id = id, document = document });
 
-            await mediator.Send(new Application.Handlers.ProductCategory.Commands.Update.UpdateProductCategoryCommand { Id = id, document = document });
+            await _mediator.Send(applicationCommand);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProductCategory(int id)
         {
-            //await productCategoriesRepository.DeleteProductCategory(id);
+            var applicationCommand = _mapper.Map<Application.Handlers.ProductCategory.Commands.Delete.DeleteProductCategoryCommand>
+                         (new DeleteProductCategoryCommand() { Id = id });
 
-            await mediator.Send(new Application.Handlers.ProductCategory.Commands.Delete.DeleteProductCategoryCommand() { Id = id });
+            await _mediator.Send(applicationCommand);
 
             return Ok();
         }

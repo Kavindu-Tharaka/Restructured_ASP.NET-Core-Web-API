@@ -10,7 +10,7 @@ namespace Ancon.Domain.Interfaces.ProductCategory
 {
     public interface IProductCategoryRepository
     {
-        Task<int> AddProductCategory(ProductCategoryAddModel productCategoryModel);
+        Task<int> AddProductCategory(Entities.ProductCategory productCategory);
         Task UpdateProductCategory(int productCategoryId, JsonPatchDocument document);
         Task DeleteProductCategory(int productCategoryId);
     }

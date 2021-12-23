@@ -10,6 +10,6 @@ namespace Ancon.Domain.Interfaces.Resturant
     public interface IResturantQuery
     {
         Task<List<ResturantQueryModel>> GetAllResturants();
-        Task<IEnumerable<ResturantQueryModel>> GetResturantById(int id);
+        Task<ResturantQueryModel> GetResturantById(int id);
     }
 }

@@ -10,6 +10,6 @@ namespace Ancon.Domain.Interfaces.ProductCategory
     public interface IProductCategoryQuery
     {
         Task<List<ProductCategoryQueryModel>> GetAllProductCategories();
-        Task<IEnumerable<ProductCategoryQueryModel>> GetProductCategoryById(int id);
+        Task<ProductCategoryQueryModel> GetProductCategoryById(int id);
     }
 }

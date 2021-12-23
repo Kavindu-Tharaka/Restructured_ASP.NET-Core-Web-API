@@ -11,6 +11,7 @@ namespace Ancon.Application.Handlers.Resturant.Commands.Update
     public class UpdateResturantCommand : IRequest
     {
         public int Id { get; set; }
+
         public JsonPatchDocument document { get; set; }
     }
 }

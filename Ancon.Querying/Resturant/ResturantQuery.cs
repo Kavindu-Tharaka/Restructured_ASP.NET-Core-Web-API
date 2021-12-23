@@ -34,7 +34,7 @@ namespace Ancon.Querying.Resturant
             }
         }
 
-        public async Task<IEnumerable<ResturantQueryModel>> GetResturantById(int id)
+        public async Task<ResturantQueryModel> GetResturantById(int id)
         {
             //var resturant = await context.Resturants.Include(resturant => resturant.Products).FirstOrDefaultAsync(pc => pc.Id.Equals(id));
             //return mapper.Map<Handlers.Resturant.GetResturantById.ResturantModel>(resturant);
@@ -43,7 +43,7 @@ namespace Ancon.Querying.Resturant
             using (var connection = new NpgsqlConnection(configuration.GetConnectionString("ResturantStoreDBPostgres")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<ResturantQueryModel>(sql);
+                var result = await connection.QueryFirstAsync<ResturantQueryModel>(sql);
 
                 Console.WriteLine(result);
 

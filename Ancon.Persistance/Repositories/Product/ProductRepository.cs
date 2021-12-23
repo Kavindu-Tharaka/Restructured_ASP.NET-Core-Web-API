@@ -8,21 +8,17 @@ namespace Ancon.Persistance.Repositories.Product
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ResturantStoreContext context;
-        private readonly IMapper mapper;
+        private readonly ResturantStoreContext _context;
 
-        public ProductRepository(ResturantStoreContext context, IMapper mapper)
+        public ProductRepository(ResturantStoreContext context)
         {
-            this.context = context;
-            this.mapper = mapper;
+            _context = context;
         }
 
-        public async Task<int> AddProduct(ProductAddModel productModel)
+        public async Task<int> AddProduct(Domain.Entities.Product product)
         {
-            var product = mapper.Map<Domain.Entities.Product>(productModel);   
-
-            context.Products.Add(product);
-            await context.SaveChangesAsync();
+            _context.Products.Add(product);
+            await _context.SaveChangesAsync();
 
             return product.Id;
         }
@@ -30,17 +26,17 @@ namespace Ancon.Persistance.Repositories.Product
         public async Task DeleteProduct(int productId)
         {
             var product = new Domain.Entities.Product() { Id = productId };
-            context.Products.Remove(product);
-            await context.SaveChangesAsync();
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateProduct(int productId, JsonPatchDocument document)
         {
-            var product = await context.Products.FindAsync(productId);
+            var product = await _context.Products.FindAsync(productId);
             if (product != null)
             {
                 document.ApplyTo(product);
-                await context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
     }

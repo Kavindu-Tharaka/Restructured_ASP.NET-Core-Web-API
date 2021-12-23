@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ancon.Application.Handlers.Resturant.Queries.GetById
 {
-    public class GetByIdResturantQuery : IRequest<IEnumerable<ResturantQueryModel>>
+    public class GetByIdResturantQuery : IRequest<ResturantQueryModel>
     {
         public int Id { get; set; }
     }

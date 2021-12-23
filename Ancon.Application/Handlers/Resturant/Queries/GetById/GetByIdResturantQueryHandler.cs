@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Ancon.Application.Handlers.Resturant.Queries.GetById
 {
-    public class GetByIdResturantQueryHandler : IRequestHandler<GetByIdResturantQuery, IEnumerable<ResturantQueryModel>>
+    public class GetByIdResturantQueryHandler : IRequestHandler<GetByIdResturantQuery, ResturantQueryModel>
     {
         private readonly IResturantQuery resturantQuery;
 
@@ -20,7 +20,7 @@ namespace Ancon.Application.Handlers.Resturant.Queries.GetById
             this.resturantQuery = resturantQuery;
         }
 
-        public async Task<IEnumerable<ResturantQueryModel>> Handle(GetByIdResturantQuery request, CancellationToken cancellationToken)
+        public async Task<ResturantQueryModel> Handle(GetByIdResturantQuery request, CancellationToken cancellationToken)
         {
             return await resturantQuery.GetResturantById(request.Id);
         }

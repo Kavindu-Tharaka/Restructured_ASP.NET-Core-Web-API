@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ancon.Application.Handlers.Product.Queries.GetById
 {
-    public class GetByIdProductQuery : IRequest<IEnumerable<ProductQueryModel>>
+    public class GetByIdProductQuery : IRequest<ProductQueryModel>
     {
         public int Id { get; set; }
     }

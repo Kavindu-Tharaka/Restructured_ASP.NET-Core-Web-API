@@ -1,4 +1,10 @@
-﻿using MediatR;
+﻿using Ancon.API.Models.Resturant.Command.Add;
+using Ancon.API.Models.Resturant.Command.Delete;
+using Ancon.API.Models.Resturant.Command.Update;
+using Ancon.API.Models.Resturant.Queries.Get;
+using Ancon.API.Models.Resturant.Queries.GetById;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -10,29 +16,30 @@ namespace Ancon.API.Controllers
     [ApiController]
     public class ResturantsController : ControllerBase
     {
-        private readonly IMediator mediator;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public ResturantsController(IMediator mediator)
+        public ResturantsController(IMediator mediator, IMapper mapper)
         {
-            this.mediator = mediator;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllResturants()
         {
-            /*var resturants = await resturantRepository.GetAllResturants();*/
+            var applicationQuery = _mapper.Map<Application.Handlers.Resturant.Queries.Get.GetResturantQuery>(new GetResturantQuery());
 
-            var resturants = await mediator.Send(new Application.Handlers.Resturant.Queries.Get.GetResturantQuery());
+            var resturants = await _mediator.Send(applicationQuery);
             return Ok(resturants);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetResturantById([FromRoute] int id)
         {
-            //var resturant = await resturantRepository.GetResturantById(id);
+            var applicationQuery = _mapper.Map<Application.Handlers.Resturant.Queries.GetById.GetByIdResturantQuery>(new GetByIdResturantQuery() { Id = id });
 
-            var resturant = await mediator.Send(new Application.Handlers.Resturant.Queries.GetById.GetByIdResturantQuery() { Id = id });
-
+            var resturant = await _mediator.Send(applicationQuery);
 
             if (resturant == null)
             {
@@ -43,11 +50,11 @@ namespace Ancon.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddResturant([FromBody] Application.Handlers.Resturant.Commands.Add.AddResturantCommand command)
+        public async Task<IActionResult> AddResturant([FromBody] AddResturantCommand command)
         {
-            //var id = await resturantRepository.AddResturant(resturantmodel);
+            var applicationCommand = _mapper.Map<Application.Handlers.Resturant.Commands.Add.AddResturantCommand>(command);
 
-            var id = await mediator.Send(command);
+            var id = await _mediator.Send(applicationCommand);
 
 
             return CreatedAtAction(nameof(GetResturantById), new { id = id, controller = "resturants" }, id);
@@ -56,9 +63,10 @@ namespace Ancon.API.Controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateResturant([FromBody] JsonPatchDocument document, [FromRoute] int id)
         {
-            //await resturantRepository.UpdateResturant(id, document);
+            var applicationCommand = _mapper.Map<Application.Handlers.Resturant.Commands.Update.UpdateResturantCommand>
+                                     (new UpdateResturantCommand() { Id = id, document = document });
 
-            await mediator.Send(new Application.Handlers.Resturant.Commands.Update.UpdateResturantCommand() { Id = id, document = document });
+            await _mediator.Send(applicationCommand);
 
             return Ok();
         }
@@ -66,9 +74,10 @@ namespace Ancon.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteResturant(int id)
         {
-            //await resturantRepository.DeleteResturant(id);
+            var applicationCommand = _mapper.Map<Application.Handlers.Resturant.Commands.Delete.DeleteResturantCommand>
+                                     (new DeleteResturantCommand() { Id = id });
 
-            await mediator.Send(new Application.Handlers.Resturant.Commands.Delete.DeleteResturantCommand() { Id = id });
+            await _mediator.Send(applicationCommand);
 
             return NoContent();
         }

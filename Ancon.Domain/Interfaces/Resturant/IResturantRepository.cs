@@ -10,7 +10,7 @@ namespace Ancon.Domain.Interfaces.Resturant
 {
     public interface IResturantRepository
     {
-        Task<int> AddResturant(ResturantAddModel resturantModel);
+        Task<int> AddResturant(Entities.Resturant resturantModel);
         Task UpdateResturant(int resturantId, JsonPatchDocument document);
         Task DeleteResturant(int resturantId);
     }

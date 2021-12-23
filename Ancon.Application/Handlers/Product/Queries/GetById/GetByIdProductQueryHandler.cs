@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ancon.Application.Handlers.Product.Queries.GetById
 {
-    public class GetByIdProductQueryHandler : IRequestHandler<GetByIdProductQuery, IEnumerable<ProductQueryModel>>
+    public class GetByIdProductQueryHandler : IRequestHandler<GetByIdProductQuery, ProductQueryModel>
     {
         private readonly IProductQuery productQuery;
 
@@ -19,7 +19,7 @@ namespace Ancon.Application.Handlers.Product.Queries.GetById
             this.productQuery = productQuery;
         }
 
-        public async Task<IEnumerable<ProductQueryModel>> Handle(GetByIdProductQuery request, CancellationToken cancellationToken)
+        public async Task<ProductQueryModel> Handle(GetByIdProductQuery request, CancellationToken cancellationToken)
         {
             return await productQuery.GetProductById(request.Id);
         }

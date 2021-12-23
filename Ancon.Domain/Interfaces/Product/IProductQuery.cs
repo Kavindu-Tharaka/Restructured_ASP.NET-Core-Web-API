@@ -7,6 +7,6 @@ namespace Ancon.Domain.Interfaces.Product
     public interface IProductQuery
     {
         Task<List<ProductQueryModel>> GetAllProducts();
-        Task<IEnumerable<ProductQueryModel>> GetProductById(int id);
+        Task<ProductQueryModel> GetProductById(int id);
     }
 }
