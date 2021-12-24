@@ -1,4 +1,5 @@
-﻿using Ancon.Domain.Interfaces.Product;
+﻿using Ancon.Domain.Interfaces;
+using Ancon.Domain.Interfaces.Product;
 using Ancon.Domain.Interfaces.Resturant;
 using MediatR;
 using System;
@@ -12,16 +13,16 @@ namespace Ancon.Application.Handlers.Resturant.Commands.Delete
 {
     public class DeleteResturantCommandHandler : IRequestHandler<DeleteResturantCommand, Unit>
     {
-        private readonly IResturantRepository resturantRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteResturantCommandHandler(IResturantRepository resturantRepository)
+        public DeleteResturantCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.resturantRepository = resturantRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(DeleteResturantCommand request, CancellationToken cancellationToken)
         {
-            await resturantRepository.DeleteResturant(request.Id);
+            await _unitOfWork.resturantRepository.DeleteResturant(request.Id);
             return Unit.Value;
         }
     }

@@ -1,4 +1,5 @@
-﻿using Ancon.Domain.Interfaces.ProductCategory;
+﻿using Ancon.Domain.Interfaces;
+using Ancon.Domain.Interfaces.ProductCategory;
 using Ancon.Domain.Models;
 using MediatR;
 using System.Threading;
@@ -8,11 +9,11 @@ namespace Ancon.Application.Handlers.ProductCategory.Commands.Add
 {
     public class AddProductCategoryCommandHandler : IRequestHandler<AddProductCategoryCommand, int>
     {
-        private readonly IProductCategoryRepository productCategoryRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AddProductCategoryCommandHandler(IProductCategoryRepository productCategoryRepository)
+        public AddProductCategoryCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.productCategoryRepository = productCategoryRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> Handle(AddProductCategoryCommand request, CancellationToken cancellationToken)
@@ -22,7 +23,7 @@ namespace Ancon.Application.Handlers.ProductCategory.Commands.Add
                 CategoryName = request.CategoryName,
             };
 
-            return await productCategoryRepository.AddProductCategory(productCategory);
+            return await _unitOfWork.productCategoryRepository.AddProductCategory(productCategory);
 
         }
     }

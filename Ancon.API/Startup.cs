@@ -1,5 +1,6 @@
 using Ancon.API.Models.Resturant.Command.Add;
 using Ancon.Application.Handlers.Resturant.Queries.Get;
+using Ancon.Domain.Interfaces;
 using Ancon.Domain.Interfaces.Product;
 using Ancon.Domain.Interfaces.ProductCategory;
 using Ancon.Domain.Interfaces.Resturant;
@@ -34,26 +35,9 @@ namespace Ancon.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMediatR(Assembly.GetExecutingAssembly());
-
-
-
-
-
-
-            // meka witharak dala thiyeddi anith ewa wada karanne kohomada?
 
             services.AddMediatR(typeof(GetResturantQueryHandler).GetTypeInfo().Assembly);
             //services.AddMediatR(typeof(AddResturantCommand).GetTypeInfo().Assembly);
-
-
-
-
-
-
-
-
-
 
 
             services.AddControllers().AddNewtonsoftJson();
@@ -62,14 +46,16 @@ namespace Ancon.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ancon.API", Version = "v1" });
             });
 
-            services.AddScoped<IProductQuery, ProductQuery>();  //singleton, scoped dala wenasa balanna
-            services.AddScoped<IProductCategoryQuery, ProductCategoryQuery>();  //singleton, scoped dala wenasa balanna
-            services.AddScoped<IResturantQuery, ResturantQuery>();  //singleton, scoped dala wenasa balanna
+            services.AddScoped<IProductQuery, ProductQuery>();  
+            services.AddScoped<IProductCategoryQuery, ProductCategoryQuery>(); 
+            services.AddScoped<IResturantQuery, ResturantQuery>();
 
 
-            services.AddScoped<IProductRepository, ProductRepository>();  //singleton, scoped dala wenasa balanna
-            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();  //singleton, scoped dala wenasa balanna
-            services.AddScoped<IResturantRepository, ResturantRepository>();  //singleton, scoped dala wenasa balanna
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+            services.AddScoped<IResturantRepository, ResturantRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //services.AddDbContext<ResturantStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ResturantStoreDB")));
 

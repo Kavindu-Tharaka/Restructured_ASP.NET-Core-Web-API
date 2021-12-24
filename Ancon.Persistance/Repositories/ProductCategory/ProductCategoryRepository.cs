@@ -1,4 +1,5 @@
-﻿using Ancon.Domain.Interfaces.ProductCategory;
+﻿using Ancon.Domain.Interfaces;
+using Ancon.Domain.Interfaces.ProductCategory;
 using Ancon.Domain.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
@@ -9,16 +10,18 @@ namespace Ancon.Persistance.Repositories.ProductCategory
     public class ProductCategoryRepository : IProductCategoryRepository
     {
         private readonly ResturantStoreContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ProductCategoryRepository(ResturantStoreContext context)
+        public ProductCategoryRepository(ResturantStoreContext context, IUnitOfWork unitOfWork)
         {
             _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> AddProductCategory(Domain.Entities.ProductCategory productCategory)
         {
             _context.ProductCategories.Add(productCategory);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.SaveAync();
 
             return productCategory.Id;
         }
@@ -27,7 +30,7 @@ namespace Ancon.Persistance.Repositories.ProductCategory
         {
             var productCategory = new Domain.Entities.ProductCategory() { Id = productCategoryId };
             _context.ProductCategories.Remove(productCategory);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.SaveAync();
         }
 
         public async Task UpdateProductCategory(int productCategoryId, JsonPatchDocument document)
@@ -36,7 +39,7 @@ namespace Ancon.Persistance.Repositories.ProductCategory
             if (productCategory != null)
             {
                 document.ApplyTo(productCategory);
-                await _context.SaveChangesAsync();
+                await _unitOfWork.SaveAync();
             }
         }
     }

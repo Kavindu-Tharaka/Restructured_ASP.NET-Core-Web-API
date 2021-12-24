@@ -1,4 +1,5 @@
-﻿using Ancon.Domain.Interfaces.Resturant;
+﻿using Ancon.Domain.Interfaces;
+using Ancon.Domain.Interfaces.Resturant;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,11 +8,11 @@ namespace Ancon.Application.Handlers.Resturant.Commands.Add
 {
     public class AddResturantCommandHandler : IRequestHandler<AddResturantCommand, int>
     {
-        private readonly IResturantRepository resturantRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AddResturantCommandHandler(IResturantRepository resturantRepository )
+        public AddResturantCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.resturantRepository = resturantRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> Handle(AddResturantCommand request, CancellationToken cancellationToken)
@@ -22,7 +23,7 @@ namespace Ancon.Application.Handlers.Resturant.Commands.Add
                 Address = request.Address,
             };
 
-            return await resturantRepository.AddResturant(resturant);
+            return await _unitOfWork.resturantRepository.AddResturant(resturant);
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using Ancon.Domain.Interfaces.Product;
+﻿using Ancon.Domain.Interfaces;
+using Ancon.Domain.Interfaces.Product;
 using Ancon.Domain.Interfaces.ProductCategory;
 using MediatR;
 using System;
@@ -12,16 +13,16 @@ namespace Ancon.Application.Handlers.ProductCategory.Commands.Delete
 {
     public class DeleteProductCategoryCommandHandler : IRequestHandler<DeleteProductCategoryCommand, Unit>
     {
-        private readonly IProductCategoryRepository productCategoryRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteProductCategoryCommandHandler(IProductCategoryRepository productCategoryRepository)
+        public DeleteProductCategoryCommandHandler(IUnitOfWork unitOfWork)
         {
-            this.productCategoryRepository = productCategoryRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(DeleteProductCategoryCommand request, CancellationToken cancellationToken)
         {
-            await productCategoryRepository.DeleteProductCategory(request.Id);
+            await _unitOfWork.productCategoryRepository.DeleteProductCategory(request.Id);
             return Unit.Value;
         }
     }

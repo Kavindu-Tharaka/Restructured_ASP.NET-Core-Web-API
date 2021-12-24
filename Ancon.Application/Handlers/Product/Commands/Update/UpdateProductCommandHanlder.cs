@@ -1,4 +1,5 @@
-﻿using Ancon.Domain.Interfaces.Product;
+﻿using Ancon.Domain.Interfaces;
+using Ancon.Domain.Interfaces.Product;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,16 @@ namespace Ancon.Application.Handlers.Product.Commands.Update
 {
     public class UpdateProductCommandHanlder : IRequestHandler<UpdateProductCommand, Unit>
     {
-        private readonly IProductRepository productRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateProductCommandHanlder(IProductRepository productRepository)
+        public UpdateProductCommandHanlder(IUnitOfWork unitOfWork)
         {
-            this.productRepository = productRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            await productRepository.UpdateProduct(request.Id, request.document);
+            await _unitOfWork.productRepository.UpdateProduct(request.Id, request.document);
 
             return Unit.Value;
         }
